@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
                     ],
                     options={
                         'verbose_name_plural': 'Address',
-                        'db_table': 'oc_lettings_site_adress',
+                        'db_table': 'oc_lettings_site_address',
                     },
                 ),
                 migrations.CreateModel(
