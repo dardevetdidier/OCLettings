@@ -3,6 +3,8 @@ from django.urls import path, include
 
 from . import views
 
+app_name = "oc_lettings_site"
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('', include('lettings.urls')),

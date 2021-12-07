@@ -3,8 +3,8 @@ from django.urls import reverse
 
 
 @pytest.mark.django_db
-def test_index(client):
-    url = reverse('profiles:index')
+def test_index_site(client):
+    url = reverse('index')
     print(url)
     response = client.get(url)
     expected_content = b"<title>"
