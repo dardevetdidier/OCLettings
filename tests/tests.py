@@ -1,14 +1,18 @@
 import pytest
 from django.urls import reverse
+from django.test import RequestFactory
+
+from oc_lettings_site.views import index
 
 
 @pytest.mark.django_db
-def test_index_site(client):
-    url = reverse('index')
-    print(url)
-    response = client.get(url)
-    expected_content = b"<title>"
-    assert response.status_code == 200
-    assert expected_content in response.content
+class TestViews:
 
-
+    def test_index(self):
+        path = reverse('index')
+        request = RequestFactory().get(path)
+        print(request)
+        response = index(request)
+        expected_content = "<title>"
+        assert response.status_code == 200
+        assert expected_content in response.content.decode('utf-8')

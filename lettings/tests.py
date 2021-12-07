@@ -1,51 +1,30 @@
 import pytest
 from django.urls import reverse
+from mixer.backend.django import mixer
+from django.test import RequestFactory
 
-from lettings.models import Letting, Address
-
-
-@pytest.fixture
-def get_address():
-    address = Address(
-        id=1,
-        number=7217,
-        street="Bedford Street",
-        city="Brunswick",
-        state="GA",
-        zip_code=31525,
-        country_iso_code="USA"
-    )
-    return address
-
-
-@pytest.fixture
-def get_letting(get_address):
-    letting = Letting(
-        id=1,
-        title="Joshua Tree Green Haus /w Hot Tub",
-        address=get_address
-    )
-    return letting
+from lettings.models import Letting
+from lettings.views import index, letting
 
 
 @pytest.mark.django_db
-def test_index(client):
-    url = reverse('lettings:index')
-    print(url)
-    response = client.get(url)
-    expected_content = b"<title>"
-    assert response.status_code == 200
-    assert expected_content in response.content
+class TestViews:
 
+    def test_index(self):
+        path = reverse('lettings:index')
+        request = RequestFactory().get(path)
+        print(request)
+        response = index(request)
+        expected_content = "<title>"
+        assert response.status_code == 200
+        assert expected_content in response.content.decode('utf-8')
 
-@pytest.mark.django_db
-def test_letting(client, get_letting):
-    letting_id = get_letting.id
-    print(letting_id)
-    url = reverse('lettings:letting', kwargs={"letting_id": letting_id})
-    print(url)
-    response = client.get(url)
-    expected_content = b"<title>"
-    assert response.status_code == 200
-    assert expected_content in response.content
-
+    def test_letting(self):
+        path = reverse('lettings:letting', kwargs={'letting_id': 1})
+        request = RequestFactory().get(path)
+        request.letting = mixer.blend(Letting)
+        print(request)
+        response = letting(request, letting_id=1)
+        expected_content = f"<title>{request.letting}</title>"
+        assert response.status_code == 200
+        assert expected_content in response.content.decode('utf-8')
