@@ -42,7 +42,7 @@ def test_index(client):
 def test_letting(client, get_letting):
     letting_id = get_letting.id
     print(letting_id)
-    url = reverse('lettings:letting', kwargs={"letting_id": 1})
+    url = reverse('lettings:letting', kwargs={"letting_id": letting_id})
     print(url)
     response = client.get(url)
     expected_content = b"<title>"
