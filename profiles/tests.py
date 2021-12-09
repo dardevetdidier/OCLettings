@@ -15,7 +15,7 @@ class TestViews:
         request = RequestFactory().get(path)
         print(request)
         response = index(request)
-        expected_content = b"<title>"
+        expected_content = b"<title>Profiles</title>"
         assert response.status_code == 200
         assert expected_content in response.content
 

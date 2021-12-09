@@ -15,7 +15,7 @@ class TestViews:
         request = RequestFactory().get(path)
         print(request)
         response = index(request)
-        expected_content = "<title>"
+        expected_content = "<title>Lettings</title>"
         assert response.status_code == 200
         assert expected_content in response.content.decode('utf-8')
 
