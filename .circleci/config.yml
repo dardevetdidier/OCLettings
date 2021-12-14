@@ -22,7 +22,7 @@ jobs:
       - checkout
       - run:
           name: install dependancies
-          command: python install -r requirements.txt
+          command: pip install -r requirements.txt
       - run:
           name: run tests
           command: pytest
