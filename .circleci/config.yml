@@ -45,13 +45,12 @@ jobs:
           docker push $IMAGE_NAME:$TAG
 
 workflows:
-  build_test_quality:
-    jobs:
-      - build_test_linting
-
   dockerize_app:
     jobs:
+      - build_test_linting
       - build_push_docker:
+          requires:
+            - build_test_linting
           filters:
             branches:
               only: main
