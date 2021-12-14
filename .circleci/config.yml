@@ -32,40 +32,45 @@ jobs:
           name: run linting
           command: flake8
 
-  # build the docker image and push to Docker hub
-  build_push_docker:
-    docker:
-      - image: cimg/python:3.9
-    steps:
-      - setup_remote_docker
-      - environment:
-          IMAGE_NAME: diddrdv/oclettings
-      - run:
-          command:
-            TAG=0.1.$CIRCLE_BUILD_NUM
-            docker built -t $IMAGE_NAME:$TAG .
-            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-            docker push $IMAGE_NAME:$TAG
-
-  # deployement
-  #deployement:
-  #	-...
-
-
 workflows:
-  build_test_quality:
+  build_and_test:
     jobs:
       - build_test_linting
-
-  dockerize_app:
-    jobs:
-      - build_push_docker:
-            filters:
-              branches:
-                only: main
-#  deploy:
+#
+#  # build the docker image and push to Docker hub
+#  build_push_docker:
+#    docker:
+#      - image: cimg/python:3.9
+#    steps:
+#      - setup_remote_docker
+#      - environment:
+#          IMAGE_NAME: diddrdv/oclettings
+#      - run:
+#          command:
+#            TAG=0.1.$CIRCLE_BUILD_NUM
+#            docker built -t $IMAGE_NAME:$TAG .
+#            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+#            docker push $IMAGE_NAME:$TAG
+#
+#  # deployement
+#  #deployement:
+#  #	-...
+#
+#
+#workflows:
+#  build_test_quality:
 #    jobs:
-#      - deploy:
-#          filters:
-#            branches:
-#              only: main
+#      - build_test_linting
+#
+#  dockerize_app:
+#    jobs:
+#      - build_push_docker:
+#            filters:
+#              branches:
+#                only: main
+##  deploy:
+##    jobs:
+##      - deploy:
+##          filters:
+##            branches:
+##              only: main
