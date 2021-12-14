@@ -54,8 +54,6 @@ workflows:
   dockerize_app:
     jobs:
       - build_push_docker:
-          requires:
-            - build_test_quality
           filters:
             branches:
               only: main
