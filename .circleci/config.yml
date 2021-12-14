@@ -15,40 +15,37 @@
 version: 2.1
 
 jobs:
-  #build
-  build:
+  #build and test
+  build_test_linting:
     docker:
-      - image: cimg/python:3.10
+      - image: cimg/python:3.9
     steps:
       - checkout
       # install dependancies
       - run:
-        name: install dependancies
-        command: python install -r requirements.txt
+          name: install dependancies
+          command: python install -r requirements.txt
+      - run:
+          name: run tests
+          command: pytest
+      - run:
+          name: run linting
+          command: flake8
 
-  # test
-  tests:
-    - run:
-      name: run tests
-      command: pytest
-
-  # quality
-  linting:
-    - run:
-      name: run linting
-      command: flake8
-
-  # build and push Docker image
+  # build the docker image and push to Docker hub
   build_push_docker:
-    - setup_remote_docker
-    - environment:
-      IMAGE_NAME: diddrdv/oclettings
-    - run:
-      command:
-        TAG=0.1.$CIRCLE_BUILD_NUM
-        docker built -t $IMAGE_NAME:$TAG .
-        echo $ DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-        docker push $IMAGE_NAME:$TAG
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      - setup_remote_docker
+      - environment:
+          IMAGE_NAME: diddrdv/oclettings
+      - run:
+          command:
+            TAG=0.1.$CIRCLE_BUILD_NUM
+            docker built -t $IMAGE_NAME:$TAG .
+            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+            docker push $IMAGE_NAME:$TAG
 
   # deployement
   #deployement:
@@ -58,22 +55,17 @@ jobs:
 workflows:
   build_test_quality:
     jobs:
-      - build
-      - test:
-        requires:
-          - build
-      - linting:
-        requires:
-          - build
-    dockerize_app:
-      jobs:
-        - build_push_docker:
-          filters:
-            branches:
-            only: main
-  deploy:
+      - build_test_linting
+
+  dockerize_app:
     jobs:
-      - deploy:
-        filters:
-          branches:
-          only: main
+      - build_push_docker:
+            filters:
+              branches:
+                only: main
+#  deploy:
+#    jobs:
+#      - deploy:
+#          filters:
+#            branches:
+#              only: main
