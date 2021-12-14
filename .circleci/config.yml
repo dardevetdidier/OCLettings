@@ -21,9 +21,9 @@ jobs:
       - image: cimg/python:3.9
     steps:
       - setup_remote_docker
-      - environment:
+	  - environment:
 		  IMAGE_NAME: diddrdv/oclettings
-      - run:
+	  - run:
 		  command:
 			  TAG=0.1.$CIRCLE_BUILD_NUM
 			  docker built -t $IMAGE_NAME:$TAG .
