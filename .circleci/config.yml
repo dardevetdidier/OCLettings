@@ -32,7 +32,7 @@ jobs:
 
   build_push_docker:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/base:2021.11
     environment:
       IMAGE_NAME: diddrdv/oclettings
     steps:
