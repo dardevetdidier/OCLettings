@@ -1,27 +1,11 @@
-# 1. Create a .circleci directory
-# 2. Create config.yml
-# 3. Define jobs
-#				- build
-#				- tests
-#				- linting
-#				- build and push docker image
-#				- deployement
-# 4. Define Workflows
-#				- build/test/quality
-#				- build/push docker image
-#				- deploy on heroku
-
-
 version: 2.1
 
 jobs:
-  #build and test
   build_test_linting:
     docker:
       - image: cimg/python:3.9
     steps:
       - checkout
-      # install dependancies
       - run:
           name: install dependancies
           command: python install -r requirements.txt
@@ -31,7 +15,6 @@ jobs:
       - run:
           name: run linting
           command: flake8
-
 workflows:
   build_and_test:
     jobs:
