@@ -55,7 +55,7 @@ workflows:
     jobs:
       - build_push_docker:
           requires:
-            - build_test_linting
+            - build_test_quality
           filters:
             branches:
               only: main
