@@ -1,4 +1,4 @@
-# 1. Create a .circle directory
+# 1. Create a .circleci directory
 # 2. Create config.yml
 # 3. Define jobs
 #				- build
