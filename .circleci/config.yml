@@ -34,10 +34,11 @@ jobs:
   build_push_docker:
     docker:
       - image: cimg/python:3.9
+    environment:
+      IMAGE_NAME: diddrdv/oclettings
     steps:
       - setup_remote_docker
-      - environment:
-          IMAGE_NAME: diddrdv/oclettings
+      - checkout
       - run:
           command:
             TAG=0.1.$CIRCLE_BUILD_NUM
