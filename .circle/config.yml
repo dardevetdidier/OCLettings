@@ -1,0 +1,81 @@
+# 1. Create a .circle directory
+# 2. Create config.yml
+# 3. Define jobs
+#				- build
+#				- tests
+#				- linting
+#				- build and push docker image
+#				- deployement
+# 4. Define Workflows
+#				- build/test/quality
+#				- build/push docker image
+#				- deploy on heroku
+
+
+version: 2.1
+
+jobs:
+	#build
+  build:
+		docker:
+	  	- image: cimg/python:3.10
+  	steps:  		
+  		- checkout
+  		# install dependancies
+  		- run:
+  			name: install dependancies
+  			command: python install -r requirements.txt
+
+	# test
+	tests:
+		- run:
+			name: run tests
+			command: pytest
+
+	# quality
+	linting:			
+			- run:
+				name: run linting
+				command: flake8
+			
+	# build and push Docker image
+	build_push_docker:	
+		- setup_remote_docker
+		- environment:
+			IMAGE_NAME: diddrdv/oclettings
+		- run:
+			command: 
+				TAG=0.1.$CIRCLE_BUILD_NUM
+				docker built -t $IMAGE_NAME:$TAG .
+				echo $ DOCKER_PASS | docker login -u $DOCKER_USER 66PASSWORD6STDIN
+				DOCKER PUSH $IMAGE_NAME:$TAG
+	
+	# deployement
+	#deployement:
+	#	-...
+
+
+	workflows:
+		build_test_quality:
+			jobs:
+				- build
+				- test:
+						requires:
+							- build
+				- linting:
+						requires:
+							- build
+		dockerize_app:
+			jobs:
+				- build_push_docker:
+					filters:
+						branches:
+							only: main
+		deploy:
+			jobs:
+				- deploy:
+					filters:
+						branches:
+							only: main
+
+				
