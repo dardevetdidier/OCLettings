@@ -45,21 +45,19 @@ jobs:
           docker push $IMAGE_NAME:$TAG
 
   build_deploy:
-    docker:
-      - image: cimg/base:2021.11
+    machine: true
     steps:
       - setup_remote_docker
       - checkout
       - run:
           name: Build and push image to Heroku
           command: |
-            heroku/install
+            sudo curl https://cli-assets.heroku.com/install.sh | sh
             HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
             HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a oc-lettings-v01 web
             HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a oc-lettings-v01 web
 
-orbs:
-  heroku: circleci/heroku@1.2.6
+
 
 workflows:
   test_dockerize_deploy_app:
