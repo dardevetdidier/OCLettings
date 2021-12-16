@@ -47,7 +47,6 @@ jobs:
   build_deploy:
     machine: true
     steps:
-      - setup_remote_docker
       - checkout
       - run:
           name: Build and push image to Heroku
