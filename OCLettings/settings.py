@@ -13,7 +13,7 @@ if os.path.isfile(dotenv_file):
     load_dotenv(dotenv_file)
 
 sentry_sdk.init(
-    dsn=os.environ['SENTRY_DSN'],
+    dsn=os.getenv('SENTRY_DSN'),
     integrations=[DjangoIntegration()],
 
     # Set traces_sample_rate to 1.0 to capture 100%
