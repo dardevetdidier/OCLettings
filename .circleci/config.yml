@@ -72,7 +72,7 @@ workflows:
               only: main
       - heroku/deploy-via-git:
           requires:
-            - build_test_linting
+            - build_push_docker
           filters:
             branches:
               only:
