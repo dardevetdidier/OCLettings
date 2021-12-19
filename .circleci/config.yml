@@ -13,6 +13,8 @@ version: 2.1
 #				- build/push docker image
 #				- deploy on heroku
 
+orbs:
+  heroku: circleci/heroku@1.2.6
 
 jobs:
   build_test_linting:
@@ -44,17 +46,17 @@ jobs:
           echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
           docker push $IMAGE_NAME:$TAG
 
-  build_deploy:
-    machine: true
-    steps:
-      - checkout
-      - run:
-          name: Build and push image to Heroku
-          command: |
-            sudo curl https://cli-assets.heroku.com/install.sh | sh
-            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
-            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a oc-lettings-v01 web
-            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a oc-lettings-v01 web
+#  build_deploy:
+#    machine: true
+#    steps:
+#      - checkout
+#      - run:
+#          name: Build and push image to Heroku
+#          command: |
+#            sudo curl https://cli-assets.heroku.com/install.sh | sh
+#            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:login
+#            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:push -a oc-lettings-v01 web
+#            HEROKU_API_KEY=${HEROKU_TOKEN} heroku container:release -a oc-lettings-v01 web
 
 
 
@@ -68,9 +70,17 @@ workflows:
           filters:
             branches:
               only: main
-      - build_deploy:
+      - heroku/deploy-via-git:
           requires:
-            - build_push_docker
+            - build_test_linting
           filters:
             branches:
-              only: main
+              only:
+                main
+
+#      - build_deploy:
+#          requires:
+#            - build_push_docker
+#          filters:
+#            branches:
+#              only: main
