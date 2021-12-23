@@ -135,9 +135,12 @@ Une fois le pipeline circleci effectué une image docker est crée sur circleci-
 pour lancer l'application il faut récupérer cette image et l'exécuter.
 
 ### Récupérer l'image
-```$ docker pull [votrenomutilisateurCircleCi]/oc_lettings-v01```
+* Dans votre compte docker noter la dernière version de l'image (oclettings:0.1.[n])
+* Dans un terminal\
+```$ docker pull [votrenomutilisateurCircleCi]/oclettings:1.1.[n]```
 
 ### Lister les images
+Lister les images permet de récupérer l'id de l'image à exécuter\
 ```$ docker images```
 
 ### Exécuter l'image
