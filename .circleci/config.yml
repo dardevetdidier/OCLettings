@@ -73,6 +73,9 @@ workflows:
       - heroku/deploy-via-git:
           requires:
             - build_push_docker
+          post-steps:
+            - run: heroku run -a oc-lettings-v01 python manage.py migrate
+            - run: heroku run -a oc-lettings-v01 python manage.py loaddata data.json
           filters:
             branches:
               only:
