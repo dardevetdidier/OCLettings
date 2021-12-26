@@ -111,10 +111,6 @@ Le déploiement utilise un pipeline CircleCi:
   * DOCKER_USER=VotreNomUtilisateurDocker
   * SENTRY_DSN=VotreSentryClientDSN
 
-### Appliquer les migrations et créer un super utilisateur
-```$ heroku run -a oc-lettings-v01 python manage.py migrate```\
-```$ heroku run -a oc-lettings-v01 python manage.py createsuperuser```
-
 ### Exécuter le déploiement via CircleCi
 
 Pour lancer le pipeline du déploiement via circleci, il vous suffit de faire un commit et un push
@@ -132,7 +128,7 @@ Se rendre à l'adresse https://oc-lettings-v01.herokuapp.com/sentry-debug/
 ## Lancer l'application via docker image
 
 Une fois le pipeline circleci effectué une image docker est crée sur circleci-hub.
-pour lancer l'application il faut récupérer cette image et l'exécuter.
+Pour lancer l'application il faut récupérer cette image et l'exécuter.
 
 ### Récupérer l'image
 * Dans votre compte docker noter la dernière version de l'image (oclettings:0.1.[n])
