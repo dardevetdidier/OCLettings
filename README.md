@@ -32,6 +32,13 @@ Dans le reste de la documentation sur le développement local, il est supposé q
 - Confirmer que la commande `pip` exécute l'exécutable pip dans l'environnement virtuel, `which pip`
 - Pour désactiver l'environnement, `deactivate`
 
+#### variables d'environnement
+
+- créer un fichier `.env` à la racine du projet et y créer 2 variables d'environnement:
+- DJANGO_SECRET_KEY=votreCléSecrèteDjango
+- SENTRY_DSN=[Votre_dsn_Sentry] (Voir section déploiement plus bas)
+
+
 #### Exécuter le site
 
 - `cd /path/to/Python-OC-Lettings-FR`
@@ -98,7 +105,7 @@ Le déploiement utilise un pipeline CircleCi:
 - Créer l'application heroku 'oc-lettings-v01'
 - Dans les paramètres de l'application, cliquer sur le bouton 'Reveal Config Vars' pour ajouter une varialble d'environnement
   * DJANGO_SECRET_KEY=votrecléDjango
-  * SENTRY_DSN=VotreSentryClientDSN (cliquer sur 'client keys' dans les paramètres de l'application dans Sentry)
+  * SENTRY_DSN=VotreSentryClientDSN (cliquer sur 'client keys' dans les paramètres du projet dans Sentry)
 
 ### Configurer Circleci
 - Se connecter avec son compte Github et configurer le projet OCLettings
