@@ -36,7 +36,7 @@ Dans le reste de la documentation sur le développement local, il est supposé q
 
 - créer un fichier `.env` à la racine du projet et y créer 2 variables d'environnement:
 - DJANGO_SECRET_KEY=votreCléSecrèteDjango
-- SENTRY_DSN=[Votre_dsn_Sentry] (Voir section déploiement plus bas)
+- SENTRY_DSN=[Votre_dsn_Sentry] (Voir section "Déploiement/Configurer Heroku" plus bas)
 
 
 #### Exécuter le site
