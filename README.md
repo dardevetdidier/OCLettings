@@ -107,7 +107,7 @@ Le déploiement utilise un pipeline CircleCi:
   * DJANGO_SECRET_KEY=votrecléDjango
   * SENTRY_DSN=VotreSentryClientDSN (cliquer sur 'client keys' dans les paramètres du projet dans Sentry)
 
-### Configurer Circleci
+### Configurer CircleCi
 - Se connecter avec son compte Github et configurer le projet OCLettings
 - spécifier l'utilisation du fichier config.yml existant
 - Dans les paramètres de l'application définir 2 variables d'environnement:
