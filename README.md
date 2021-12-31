@@ -148,4 +148,3 @@ Lister les images permet de récupérer l'id de l'image à exécuter\
 
 ### Exécuter l'image
 ```docker run -it -e DJANGO_SECRET_KEY=[cléDjango] -p 8000:8000 [image_id]```
-
